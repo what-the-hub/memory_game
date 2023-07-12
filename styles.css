@@ -7,6 +7,10 @@ body {
 #game {
     margin-top: 50px;
 }
+
+.time-wrapper {
+    display: flex;
+}
   
 #grid {
     border-collapse: collapse;

@@ -13,6 +13,8 @@ class MatchGrid {
         this.timer = null;
         this.remainingTime = 0;
 
+        this.boundHandleCardClick = this.handleCardClick.bind(this);
+
         this.init();
     }
 
@@ -23,14 +25,14 @@ class MatchGrid {
     }
 
     createGrid() {
+        let availableCardNumbers = this.randomizeNumbers()
         for (let row = 0; row < this.rows; row += 1) {
             let rowData = [];
-            let availableCardNumbers = this.randomizeNumbers()
             for (let col = 0; col < this.columns; col += 1) {
                 const id = row * this.columns + col;
-                const currentValue = availableCardNumbers[col]
+                const currentValue = availableCardNumbers.shift()
                 const card = {
-                    id,
+                    id: id,
                     value: currentValue,
                     flipped: false,
                     matched: false
@@ -51,6 +53,7 @@ class MatchGrid {
             const j = Math.floor(Math.random() * (i + 1));
             [cardsNumbers[i], cardsNumbers[j]] = [cardsNumbers[j], cardsNumbers[i]];
         }
+        console.log(cardsNumbers);
         return cardsNumbers
     }
 
@@ -65,9 +68,7 @@ class MatchGrid {
                 const td = document.createElement('td');
                 td.id = card.id
                 td.dataset.id = card.id;
-                td.dataset.value = card.value;
-                td.textContent = card.flipped ? card.value : '';
-                td.style.backgroundColor = card.flipped ? 'green' : 'red';
+                td.style.backgroundColor = 'red';
                 tr.appendChild(td);
             }
             gridElement.appendChild(tr);
@@ -76,18 +77,20 @@ class MatchGrid {
 
 
     addEventListeners() {
-        const gridElement = document.getElementById('grid');
-        gridElement.addEventListener('click', this.handleCardClick.bind(this));
-
         const startButton = document.getElementById('start');
         startButton.addEventListener('click', this.startGame.bind(this));
 
-        const replayButton = document.getElementById('replay');
-        replayButton.addEventListener('click', this.replayGame.bind(this));
-
         const gameElement = document.getElementById('game');
-        gameElement.addEventListener('mouseout', this.pauseGame.bind(this));
-        gameElement.addEventListener('mouseover', this.resumeGame.bind(this));
+        // gameElement.addEventListener('mouseout', this.pauseGame.bind(this));
+        // gameElement.addEventListener('mouseover', this.resumeGame.bind(this));
+    }
+
+    addGridItemsEventListener() {
+        document.getElementById('grid').addEventListener('click', this.boundHandleCardClick);
+    }
+
+    removeGridItemsEventListener() {
+        document.getElementById('grid').removeEventListener('click', this.boundHandleCardClick);
     }
 
     handleCardClick(event) {
@@ -96,34 +99,35 @@ class MatchGrid {
             const id = parseInt(cardElement.dataset.id);
             const card = this.getCardById(id);
             if (!card.flipped && !card.matched) {
-                this.flipCard(card);
-                this.checkForMatch();
+                // avoid open more than 2 cards
+                if (this.flipped.length >= 2) {
+                    this.unflipCards()
+                } else {
+                    this.flipCard(card);
+                    this.checkForMatch();
+                }
             }
         }
     }
 
     flipCard(card) {
-        const cardElement = document.getElementById(`${card.id}`)
-        card.flipped = true;
-        cardElement.textContent = card.flipped ? card.value : '';
-        cardElement.style.backgroundColor = card.flipped ? 'green' : 'red';
-
+        this.handleCardFlip(card, true)
         this.flipped.push(card.id);
-        console.log(card);
     }
 
     unflipCards() {
         for (const id of this.flipped) {
             const card = this.getCardById(id);
-            card.flipped = false;
-
-            const cardElement = document.getElementById(`${card.id}`)
-            cardElement.textContent = card.flipped ? card.value : '';
-            cardElement.style.backgroundColor = card.flipped ? 'green' : 'red';
+            this.handleCardFlip(card, false)
         }
         this.flipped = [];
-        // this.renderGrid();
-        
+    }
+
+    handleCardFlip(card, isFlipped) {
+        card.flipped = isFlipped;
+        const cardElement = document.getElementById(`${card.id}`)
+        cardElement.textContent = card.flipped ? card.value : '';
+        cardElement.style.backgroundColor = card.flipped ? 'green' : 'red';
     }
 
     checkForMatch() {
@@ -163,21 +167,27 @@ class MatchGrid {
 
     startGame() {
         this.resetGame();
+        this.addGridItemsEventListener()
+        this.runTimer()
+    }
+
+    runTimer() {
+        const startButton = document.getElementById('start');
+        startButton.innerText = 'Replay standard game';
+        this.remainingTime = this.timeLimit;
         this.timer = setInterval(() => {
+            const timerElement = document.getElementById('timer')
             this.remainingTime--;
+            timerElement.textContent = Math.floor(this.remainingTime)
             if (this.remainingTime === 0) {
                 this.endGame(false);
+                timerElement.textContent = ' Wait to start'
             }
         }, 1000);
-
-        const startButton = document.getElementById('start');
-        const replayButton = document.getElementById('replay');
-        startButton.disabled = true;
-        replayButton.disabled = true;
     }
 
     pauseGame() {
-        clearInterval(this.timer);
+        // clearInterval(this.timer);
     }
 
     resumeGame() {
@@ -195,6 +205,12 @@ class MatchGrid {
         clearInterval(this.timer);
         this.remainingTime = 0;
 
+        this.removeGridItemsEventListener()
+
+        const startButton = document.getElementById('start');
+        startButton.innerText = 'Start standard game';
+
+
         const messageElement = document.getElementById('message');
         if (win) {
             messageElement.textContent = 'Congratulations! You won!';
@@ -202,10 +218,6 @@ class MatchGrid {
             messageElement.textContent = 'Time is up! You lost!';
         }
 
-        const startButton = document.getElementById('start');
-        const replayButton = document.getElementById('replay');
-        startButton.disabled = false;
-        replayButton.disabled = false;
     }
 
     replayGame() {
@@ -216,9 +228,7 @@ class MatchGrid {
         messageElement.textContent = '';
 
         const startButton = document.getElementById('start');
-        const replayButton = document.getElementById('replay');
         startButton.disabled = false;
-        replayButton.disabled = true;
     }
 
     resetGame() {
@@ -226,8 +236,13 @@ class MatchGrid {
         this.flipped = [];
         this.matched = [];
         this.remainingTime = this.timeLimit;
+        this.timer = null;
+        clearInterval(this.timer);
+
 
         this.createGrid();
+        this.renderGrid();
+
     }
 }
 
@@ -236,7 +251,7 @@ const matchGrid = new MatchGrid({
     height: 400,
 
     // todo: validate rows and cols to even
-    rows: 5,
-    columns: 6,
-    timeLimit: 560
+    rows: 2,
+    columns: 3,
+    timeLimit: 10
 });
