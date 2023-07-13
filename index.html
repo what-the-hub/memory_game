@@ -16,6 +16,44 @@
             <table id="grid"></table>
             <div id="message"></div>
             <button id="start">Start standard game</button>
+            <button id="custom-game">Game settings</button>
+
+            <div id="form-container" style="display: none;">
+                <form id="customization-form">
+                    <div id="error">
+                        <p>Please make sure that the result of multiplying numbers of columns and rows is even</p>
+                    </div>
+                    <div class="inputs-wrapper">
+                        <div class="input-wrapper">
+                            <label for="column-input">Number of columns:</label>
+                            <input id="column-input" type="number" value="4" min="1" max="20"  step="1"/>
+                        </div>
+    
+                        <div class="input-wrapper">
+                            <label for="rows-input">Number of rows:</label>
+                            <input id="rows-input" type="number" value="5" min="1" max="20"  step="1"/>
+                        </div>
+    
+                        <div class="input-wrapper">
+                            <label for="theme-selector">Choose theme:</label>
+                            <select id="theme-selector">
+                                <option value="optionA">Default theme</option>
+                                <option value="optionB">Dark theme</option>
+                            </select>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <label for="timer-input">Enter time in sec:</label>
+                            <input id="timer-input" type="number" value="60" min="2" max="5000"/>
+                        </div>
+                    </div>
+
+                    <div class="buttons-wrapper">
+                        <button type="submit">Submit</button>
+                        <button id="cancel-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <script src="script.js"></script>
     </body>

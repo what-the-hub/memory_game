@@ -1,7 +1,5 @@
 class MatchGrid {
-    constructor({ width, height, rows, columns, timeLimit, theme }) {
-        this.width = width;
-        this.height = height;
+    constructor({ rows, columns, timeLimit, theme }) {
         this.rows = rows;
         this.columns = columns;
         this.timeLimit = timeLimit;
@@ -80,9 +78,45 @@ class MatchGrid {
         const startButton = document.getElementById('start');
         startButton.addEventListener('click', this.startGame.bind(this));
 
+        const showFormButton = document.getElementById('custom-game');
+        showFormButton.addEventListener('click', this.displayCustomizationForm);
+
+        const form = document.getElementById('customization-form');
+        form.addEventListener('submit', (event) => this.onSubmit(event));
+
+        const cancelFormButton = document.getElementById('cancel-button');
+        cancelFormButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById('form-container').style.display = 'none'
+        });
+
         const gameElement = document.getElementById('game');
         // gameElement.addEventListener('mouseout', this.pauseGame.bind(this));
         // gameElement.addEventListener('mouseover', this.resumeGame.bind(this));
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+
+        const columnsInput = event.target.elements[0].valueAsNumber;
+        const rowsInput = event.target.elements[1].valueAsNumber;
+        const timeInput = event.target.elements[3].valueAsNumber;
+
+        console.log(event.target.elements);
+
+        if ((columnsInput * rowsInput) % 2 !== 0) {
+            const error = document.getElementById('error');
+            error.style.display = 'block';
+        } else {
+            error.style.display = 'none';
+            this.rows = rowsInput;
+            this.columns = columnsInput;
+            this.timeLimit = timeInput
+
+            this.resetGame()
+
+            document.getElementById('form-container').style.display = 'none'
+        }
     }
 
     addGridItemsEventListener() {
@@ -91,6 +125,13 @@ class MatchGrid {
 
     removeGridItemsEventListener() {
         document.getElementById('grid').removeEventListener('click', this.boundHandleCardClick);
+    }
+
+    displayCustomizationForm() {
+        const formContainer = document.getElementById('form-container');
+        formContainer.style.display = 'flex'
+
+
     }
 
     handleCardClick(event) {
@@ -194,7 +235,7 @@ class MatchGrid {
         if (this.remainingTime > 0) {
             this.timer = setInterval(() => {
                 this.remainingTime--;
-                if (this.remainingTime === 0) {
+                if (this.remainingTime <= 0) {
                     this.endGame(false);
                 }
             }, 1000);
@@ -220,17 +261,6 @@ class MatchGrid {
 
     }
 
-    replayGame() {
-        this.resetGame();
-        this.renderGrid();
-
-        const messageElement = document.getElementById('message');
-        messageElement.textContent = '';
-
-        const startButton = document.getElementById('start');
-        startButton.disabled = false;
-    }
-
     resetGame() {
         this.grid = [];
         this.flipped = [];
@@ -239,7 +269,6 @@ class MatchGrid {
         this.timer = null;
         clearInterval(this.timer);
 
-
         this.createGrid();
         this.renderGrid();
 
@@ -247,9 +276,6 @@ class MatchGrid {
 }
 
 const matchGrid = new MatchGrid({
-    width: 400,
-    height: 400,
-
     // todo: validate rows and cols to even
     rows: 2,
     columns: 3,
