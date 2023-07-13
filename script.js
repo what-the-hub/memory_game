@@ -11,6 +11,8 @@ class MatchGrid {
 
         this.timer = null;
         this.remainingTime = 0;
+        this.isTimerRunning = false;
+        this.previousTime = 0;
 
         this.boundHandleCardClick = this.handleCardClick.bind(this);
 
@@ -52,7 +54,6 @@ class MatchGrid {
             const j = Math.floor(Math.random() * (i + 1));
             [cardsNumbers[i], cardsNumbers[j]] = [cardsNumbers[j], cardsNumbers[i]];
         }
-        console.log(cardsNumbers);
         return cardsNumbers
     }
 
@@ -67,7 +68,6 @@ class MatchGrid {
                 const td = document.createElement('td');
                 td.id = card.id
                 td.dataset.id = card.id;
-                console.log(this.theme);
                 td.classList.add(`${this.theme}`)
                 tr.appendChild(td);
             }
@@ -92,9 +92,9 @@ class MatchGrid {
             document.getElementById('form-container').style.display = 'none'
         });
 
-        const gameElement = document.getElementById('game');
-        // gameElement.addEventListener('mouseout', this.pauseGame.bind(this));
-        // gameElement.addEventListener('mouseover', this.resumeGame.bind(this));
+        const gameZone = document.getElementById('body');
+        gameZone.addEventListener('mouseleave', this.pauseGame.bind(this));
+        gameZone.addEventListener('mouseenter', this.resumeGame.bind(this));
     }
 
     onSubmit(event) {
@@ -104,8 +104,6 @@ class MatchGrid {
         const rowsInput = event.target.elements[1].valueAsNumber;
         const themeSelect = event.target.elements[2].value;
         const timeInput = event.target.elements[3].valueAsNumber;
-
-        console.log(event.target.elements);
 
         if ((columnsInput * rowsInput) % 2 !== 0) {
             const error = document.getElementById('error');
@@ -218,32 +216,31 @@ class MatchGrid {
     }
 
     runTimer() {
-        const startButton = document.getElementById('start');
-        startButton.innerText = 'Replay standard game';
-        this.remainingTime = this.timeLimit;
+        this.isTimerRunning = true;
+        this.remainingTime = this.previousTime ? this.previousTime : this.timeLimit;
         this.timer = setInterval(() => {
             const timerElement = document.getElementById('timer')
             this.remainingTime--;
             timerElement.textContent = Math.floor(this.remainingTime)
-            if (this.remainingTime === 0) {
+            if (this.remainingTime <= 0) {
                 this.endGame(false);
-                timerElement.textContent = ' Wait to start'
+                timerElement.textContent = 'Wait to start'
             }
         }, 1000);
     }
 
     pauseGame() {
-        // clearInterval(this.timer);
+        if (this.isTimerRunning) {
+            const getDOMTime = document.getElementById('timer').textContent;
+            this.previousTime = isNaN(getDOMTime) ? this.timeLimit : getDOMTime; 
+            this.isTimerRunning = false;
+            clearInterval(this.timer);
+        }
     }
 
     resumeGame() {
-        if (this.remainingTime > 0) {
-            this.timer = setInterval(() => {
-                this.remainingTime--;
-                if (this.remainingTime <= 0) {
-                    this.endGame(false);
-                }
-            }, 1000);
+        if (!this.isTimerRunning && this.previousTime) {
+            this.runTimer()
         }
     }
 
@@ -271,19 +268,18 @@ class MatchGrid {
         this.flipped = [];
         this.matched = [];
         this.remainingTime = this.timeLimit;
-        this.timer = null;
         clearInterval(this.timer);
-
+        this.timer = null;
+        this.previousTime = null;
         this.createGrid();
         this.renderGrid();
-
+        document.getElementById('timer').textContent = 'Wait to start'
     }
 }
 
 const matchGrid = new MatchGrid({
-    // todo: validate rows and cols to even
-    rows: 2,
-    columns: 3,
-    timeLimit: 10,
+    rows: 5,
+    columns: 4,
+    timeLimit: 40,
     theme: 'default'
 });
