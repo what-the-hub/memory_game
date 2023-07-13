@@ -1,61 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="styles.css" rel="stylesheet">
-        <title>Memory game</title>
-    </head>
-    <body id="body">
-        <div id="game">
-            <div class="time-wrapper">
-                <h3>Time remain: </h3><h3 id="timer">Wait to start</h3>
+<html lang="en" style="height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="styles.css" rel="stylesheet" />
+    <title>Memory game</title>
+  </head>
+  <body id="body">
+    <div id="game">
+      <div class="time-wrapper">
+        <h3>Time remain:</h3>
+        <h3 id="timer">Wait to start</h3>
+      </div>
+
+      <table id="grid"></table>
+      <div id="message"></div>
+      <button id="start">Start/Restart</button>
+      <button id="custom-game">Game settings</button>
+
+      <div id="form-container" style="display: none">
+        <form id="customization-form">
+          <div id="error">
+            <p>
+              Please make sure that the result of multiplying numbers of columns
+              and rows is even
+            </p>
+          </div>
+          <div class="inputs-wrapper">
+            <div class="input-wrapper">
+              <label for="column-input">Number of columns:</label>
+              <input
+                id="column-input"
+                type="number"
+                value="4"
+                min="1"
+                max="20"
+                step="1"
+              />
             </div>
-            
-            <table id="grid"></table>
-            <div id="message"></div>
-            <button id="start">Start/Restart</button>
-            <button id="custom-game">Game settings</button>
 
-            <div id="form-container" style="display: none;">
-                <form id="customization-form">
-                    <div id="error">
-                        <p>Please make sure that the result of multiplying numbers of columns and rows is even</p>
-                    </div>
-                    <div class="inputs-wrapper">
-                        <div class="input-wrapper">
-                            <label for="column-input">Number of columns:</label>
-                            <input id="column-input" type="number" value="4" min="1" max="20"  step="1"/>
-                        </div>
-    
-                        <div class="input-wrapper">
-                            <label for="rows-input">Number of rows:</label>
-                            <input id="rows-input" type="number" value="5" min="1" max="20"  step="1"/>
-                        </div>
-    
-                        <div class="input-wrapper">
-                            <label for="theme-selector">Choose theme:</label>
-                            <select id="theme-selector">
-                                <option value="default">Default theme</option>
-                                <option value="dark">Dark theme</option>
-                                <option value="strange">Strange theme</option>
-                            </select>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="timer-input">Enter time in sec:</label>
-                            <input id="timer-input" type="number" value="60" min="2" max="5000"/>
-                        </div>
-                    </div>
-
-                    <div class="buttons-wrapper">
-                        <button type="submit">Submit</button>
-                        <button id="cancel-button">Cancel</button>
-                    </div>
-                </form>
+            <div class="input-wrapper">
+              <label for="rows-input">Number of rows:</label>
+              <input
+                id="rows-input"
+                type="number"
+                value="5"
+                min="1"
+                max="20"
+                step="1"
+              />
             </div>
-        </div>
-        <script src="script.js"></script>
-    </body>
+
+            <div class="input-wrapper">
+              <label for="theme-selector">Choose theme:</label>
+              <select id="theme-selector">
+                <option value="default">Default theme</option>
+                <option value="dark">Dark theme</option>
+                <option value="strange">Strange theme</option>
+              </select>
+            </div>
+
+            <div class="input-wrapper">
+              <label for="timer-input">Enter time in sec:</label>
+              <input
+                id="timer-input"
+                type="number"
+                value="60"
+                min="2"
+                max="5000"
+              />
+            </div>
+          </div>
+
+          <div class="buttons-wrapper">
+            <button type="submit">Submit</button>
+            <button id="cancel-button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/node_modules/animejs/lib/anime.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

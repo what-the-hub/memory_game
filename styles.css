@@ -1,146 +1,147 @@
-body, body.default {
-    margin: 0;
-    padding: 1rem;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f5f5f5;
-    height: 100%;
-    box-sizing: border-box;
+body,
+body.default {
+  margin: 0;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f5f5f5;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 body.dark {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: #ffffff;
-    background-color: #6b6969;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  color: #ffffff;
+  background-color: #6b6969;
 }
 
 body.strange {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    text-align: center;
-    color: #7828fa;
-    background-color: #e2c8ff;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  text-align: center;
+  color: #7828fa;
+  background-color: #e2c8ff;
 }
-  
-#game {
-    margin-top: 50px;
-    position: relative;
 
+#game {
+  margin-top: 50px;
+  position: relative;
 }
 
 .time-wrapper {
-    display: flex;
+  display: flex;
 }
 
-#form-container{
-    display: none;
-    justify-content: center;
+#form-container {
+  display: none;
+  justify-content: center;
 }
 
 #customization-form {
-    position: absolute;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    padding: 1rem;
-    border: 2px gray solid;
-    background-color: #ccc;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 1rem;
+  border: 2px gray solid;
+  background-color: #ccc;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 #error {
-    display: none;
-    text-align: left;
-    color: rgb(117, 0, 0);
+  display: none;
+  text-align: left;
+  color: rgb(117, 0, 0);
 }
 
 .inputs-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: space-between;
 }
 
 .input-wrapper {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-wrapper select {
-    height: 100%;
+  height: 100%;
 }
 
 .buttons-wrapper {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-    justify-content: end;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: end;
 }
 
 .buttons-wrapper button {
-    margin: 0;
+  margin: 0;
 }
-  
+
 #grid {
-    border-collapse: collapse;
-    margin: 20px auto;
+  margin: 20px auto;
 }
-  
+
 #grid td {
-    width: 80px;
-    height: 80px;
-    border: 2px solid #ccc;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 24px;
-    cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ccc;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 24px;
+  cursor: pointer;
+  box-sizing: border-box;
 }
-  
+
 #message {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
-  
+
 button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 td.default {
-    background-color: rgb(214, 164, 103);
+  background-color: rgb(214, 164, 103);
 }
 
 td.default--open {
-    background-color: bisque;
+  background-color: bisque;
 }
 
 td.dark {
-    background-color: rgb(41, 28, 13);
-    color: #f5f5f5;
+  background-color: rgb(41, 28, 13);
+  color: #f5f5f5;
 }
 
 td.dark--open {
-    background-color: rgb(63, 42, 17);
-    color: #f5f5f5;
+  background-color: rgb(63, 42, 17);
+  color: #f5f5f5;
 }
 
 td.strange {
-    background-color: rgb(99, 227, 236);
-    color: #0051ff;
-    border: dashed darksalmon 2px !important;
+  background-color: rgb(99, 227, 236);
+  color: #0051ff;
+  border: dashed darksalmon 2px !important;
 }
 
 td.strange--open {
-    background-color: rgb(96, 238, 160);
-    color: #0051ff;
-    border: dotted darksalmon 2px !important;
+  background-color: rgb(96, 238, 160);
+  color: #0051ff;
+  border: dotted darksalmon 2px !important;
 }
 
-td.strange, td.strange--open {
-    border-radius: 10px;
+td.strange,
+td.strange--open {
+  border-radius: 10px;
 }
