@@ -1,7 +1,21 @@
-body {
+body, body.default {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f5f5f5;
+}
+
+body.dark {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #ffffff;
+    background-color: #6b6969;
+}
+
+body.strange {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    text-align: center;
+    color: #7828fa;
+    background-color: #e2c8ff;
 }
   
 #game {
@@ -91,4 +105,38 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+}
+
+td.default {
+    background-color: rgb(214, 164, 103);
+}
+
+td.default--open {
+    background-color: bisque;
+}
+
+td.dark {
+    background-color: rgb(41, 28, 13);
+    color: #f5f5f5;
+}
+
+td.dark--open {
+    background-color: rgb(63, 42, 17);
+    color: #f5f5f5;
+}
+
+td.strange {
+    background-color: rgb(99, 227, 236);
+    color: #0051ff;
+    border: dashed darksalmon 2px !important;
+}
+
+td.strange--open {
+    background-color: rgb(96, 238, 160);
+    color: #0051ff;
+    border: dotted darksalmon 2px !important;
+}
+
+td.strange, td.strange--open {
+    border-radius: 10px;
 }

@@ -3,6 +3,7 @@ class MatchGrid {
         this.rows = rows;
         this.columns = columns;
         this.timeLimit = timeLimit;
+        this.theme = theme
 
         this.grid = [];
         this.flipped = [];
@@ -66,7 +67,8 @@ class MatchGrid {
                 const td = document.createElement('td');
                 td.id = card.id
                 td.dataset.id = card.id;
-                td.style.backgroundColor = 'red';
+                console.log(this.theme);
+                td.classList.add(`${this.theme}`)
                 tr.appendChild(td);
             }
             gridElement.appendChild(tr);
@@ -100,6 +102,7 @@ class MatchGrid {
 
         const columnsInput = event.target.elements[0].valueAsNumber;
         const rowsInput = event.target.elements[1].valueAsNumber;
+        const themeSelect = event.target.elements[2].value;
         const timeInput = event.target.elements[3].valueAsNumber;
 
         console.log(event.target.elements);
@@ -111,11 +114,13 @@ class MatchGrid {
             error.style.display = 'none';
             this.rows = rowsInput;
             this.columns = columnsInput;
-            this.timeLimit = timeInput
+            this.timeLimit = timeInput;
+            this.theme = themeSelect;
+            document.getElementById('body').setAttribute('class', `${this.theme}`)
 
-            this.resetGame()
+            this.resetGame();
 
-            document.getElementById('form-container').style.display = 'none'
+            document.getElementById('form-container').style.display = 'none';
         }
     }
 
@@ -168,7 +173,7 @@ class MatchGrid {
         card.flipped = isFlipped;
         const cardElement = document.getElementById(`${card.id}`)
         cardElement.textContent = card.flipped ? card.value : '';
-        cardElement.style.backgroundColor = card.flipped ? 'green' : 'red';
+        card.flipped ? cardElement.setAttribute('class', `${this.theme}--open`) : cardElement.setAttribute('class', `${this.theme}`)
     }
 
     checkForMatch() {
@@ -279,5 +284,6 @@ const matchGrid = new MatchGrid({
     // todo: validate rows and cols to even
     rows: 2,
     columns: 3,
-    timeLimit: 10
+    timeLimit: 10,
+    theme: 'default'
 });
