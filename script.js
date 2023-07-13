@@ -117,7 +117,6 @@ class MatchGrid {
             document.getElementById('body').setAttribute('class', `${this.theme}`)
 
             this.resetGame();
-
             document.getElementById('form-container').style.display = 'none';
         }
     }
@@ -133,8 +132,6 @@ class MatchGrid {
     displayCustomizationForm() {
         const formContainer = document.getElementById('form-container');
         formContainer.style.display = 'flex'
-
-
     }
 
     handleCardClick(event) {
