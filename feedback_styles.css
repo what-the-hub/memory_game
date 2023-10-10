@@ -1,9 +1,21 @@
 #form {
+  margin: auto;
   border-radius: 43px;
-  box-shadow: 0 0 20px var(--shadow);
+  border: 1px solid rgba(128, 128, 128, 0.315);
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 500px;
+  max-width: 70%;
+  background-color: rgb(220, 234, 255);
 }
 
 body {
-  background-color: beige;
+  font-family: Arial, sans-serif;
+}
+
+.input {
+  width: 100%;
 }

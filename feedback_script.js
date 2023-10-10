@@ -47,3 +47,11 @@ validator
       errorMessage: 'Message should contain only good feedback!'
     }
   ])
+
+const form = document.getElementById('form')
+form.addEventListener('submit', function (e) {
+  e.preventDefault()
+  if (validator.isValid) {
+    alert('Thank you for the feedback! We will do nothing with it. Have a nice day!')
+  }
+})

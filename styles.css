@@ -30,6 +30,7 @@ body.strange {
 
 .time-wrapper {
   display: flex;
+  justify-content: center;
 }
 
 #form-container {
