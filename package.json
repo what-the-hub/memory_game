@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "animejs": "^3.2.1"
+    "animejs": "^3.2.1",
+    "js-cookie": "^3.0.5"
   }
 }

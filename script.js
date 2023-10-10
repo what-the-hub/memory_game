@@ -20,6 +20,7 @@ class MatchGrid {
   }
 
   init() {
+    this.getParamsFromCookies()
     this.createGrid()
     this.renderGrid()
     this.addEventListeners()
@@ -44,6 +45,34 @@ class MatchGrid {
     }
   }
 
+  getParamsFromCookies() {
+    const paramsString = Cookies.get('memGameParams')
+    let params
+    if (paramsString) {
+      params = JSON.parse(paramsString)
+    }
+
+    if (params) {
+      this.columns = params.columns
+      this.rows = params.rows
+      this.timeLimit = params.time
+      this.theme = params.theme
+    }
+
+    this.updateBodyTheme()
+  }
+
+  setParamsToCookies() {
+    const cookieParam = {
+      columns: this.columns,
+      rows: this.rows,
+      time: this.timeLimit,
+      theme: this.theme
+    }
+    const cookieParamString = JSON.stringify(cookieParam)
+    Cookies.set('memGameParams', cookieParamString)
+  }
+
   randomizeNumbers() {
     const halfOfAllCards = (this.rows * this.columns) / 2
     let cardsNumbers = Array.from(
@@ -55,7 +84,7 @@ class MatchGrid {
     // shuffle cardsNumbers
     for (let i = cardsNumbers.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[cardsNumbers[i], cardsNumbers[j]] = [cardsNumbers[j], cardsNumbers[i]]
+        ;[cardsNumbers[i], cardsNumbers[j]] = [cardsNumbers[j], cardsNumbers[i]]
     }
     return cardsNumbers
   }
@@ -116,11 +145,16 @@ class MatchGrid {
       this.columns = columnsInput
       this.timeLimit = timeInput
       this.theme = themeSelect
-      document.getElementById('body').setAttribute('class', `${this.theme}`)
+      this.updateBodyTheme()
 
       this.resetGame()
       document.getElementById('form-container').style.display = 'none'
+      this.setParamsToCookies()
     }
+  }
+
+  updateBodyTheme() {
+    document.getElementById('body').setAttribute('class', `${this.theme}`)
   }
 
   addGridItemsEventListener() {
