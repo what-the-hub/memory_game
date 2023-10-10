@@ -1,0 +1,9 @@
+#form {
+  border-radius: 43px;
+  box-shadow: 0 0 20px var(--shadow);
+  padding: 26px;
+}
+
+body {
+  background-color: beige;
+}

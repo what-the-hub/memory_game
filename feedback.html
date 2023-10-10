@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="feedback_styles.css" rel="stylesheet" />
+    <title>Memory game feedback</title>
+  </head>
+
+  <body id="body">
+    <form id="form" autocomplete="off" novalidate="novalidate">
+      <div class="control-wrapper">
+        <label class="input-label" for="name">Name</label>
+        <div class="input-wrapper">
+          <input id="name" class="input" autocomplete="off" type="text" placeholder="Enter your name" />
+        </div>
+      </div>
+      <div class="control-wrapper">
+        <label class="input-label" for="email">Email</label>
+        <div class="input-wrapper">
+          <input id="email" class="input" autocomplete="off" type="text" placeholder="Enter your email" />
+        </div>
+      </div>
+      <div class="control-wrapper">
+        <label class="input-label" for="feedback-message">Message</label>
+        <div class="input-wrapper">
+          <textarea id="feedback-message" class="input textarea" placeholder="Enter message"></textarea>
+        </div>
+      </div>
+
+      <div class="control-wrapper">
+        <input type="checkbox" id="agree-checkbox" class="checkbox" /><label class="input-label ml-8 pb-0"
+          for="agree-checkbox">I agree to provide all the data about me. You can use it as you wish!</label>
+      </div>
+      <div class="control-wrapper">
+        <button type="submit" class="button">Submit</button>
+      </div>
+    </form>
+
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+    <script src="feedback_script.js"></script>
+
+  </body>
+</html>
